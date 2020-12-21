@@ -5,10 +5,11 @@ import signal
 import subprocess
 import sys
 
-cpu_count = multiprocessing.cpu_count()
-
-model_server_timeout = os.environ.get('MODEL_SERVER_TIMEOUT', 60)
-model_server_workers = int(os.environ.get('MODEL_SERVER_WORKERS', cpu_count))
+cpu_count = multiprocessing.cpu_count()/2
+# model_server_timeout = os.environ.get('MODEL_SERVER_TIMEOUT', 3600*3)
+# model_server_workers = int(os.environ.get('MODEL_SERVER_WORKERS', cpu_count))
+model_server_timeout = 3600*3
+model_server_workers = int(cpu_count)
 
 def sigterm_handler(nginx_pid, gunicorn_pid):
     try:
