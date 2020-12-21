@@ -1,7 +1,7 @@
 FROM whn09/opencv-cuda:latest
 
 RUN rm -rf /etc/apt/sources.list.d/*
-    
+
 RUN mkdir -p /opt/ml/model
 
 ENV PYTHONUNBUFFERED=TRUE
