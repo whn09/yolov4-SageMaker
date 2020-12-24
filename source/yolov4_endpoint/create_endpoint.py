@@ -21,7 +21,7 @@ def parse_arguments():
         "--endpoint_ecr_image_path",
         type=str,
         help=" ",
-        default="251885400447.dkr.ecr.cn-northwest-1.amazonaws.com.cn/yolov4"
+        default="343958593302.dkr.ecr.cn-northwest-1.amazonaws.com.cn/yolov4"
     )
     parser.add_argument(
         "-en",
@@ -37,7 +37,7 @@ def parse_arguments():
         type=str,
         nargs="?",
         help="When set, this argument ",
-        default="ml.g4dn.xlarge"
+        default="ml.g4dn.4xlarge"
     )
 
     return parser.parse_args()
@@ -65,6 +65,7 @@ def deploy_endpoint():
         role = get_execution_role()
     except Exception as e:
         print("SageMaker Role doesn't exist.")
+        role = 'arn:aws-cn:iam::343958593302:role/service-role/AmazonSageMaker-ExecutionRole-20200430T094152'
 
     try:
         sm = boto3.Session().client('sagemaker')

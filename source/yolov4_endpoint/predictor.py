@@ -215,7 +215,7 @@ def detect_objects(bucket, weight,names,cfg,video,output_s3_prefix):
                     object_detection_desc = object_detection_desc + '%s left_x: %.4f top_y: %.4f width: %.4f height: %.4f \n' %(label,x,y,w,h)             
                     #object_detection_desc = str(str(label) +' (left_x:'+ str(x)+' top_y:'+str(y)+ ' width:'+ str(w)+' height:'+str(h)+')')
 
-                print(object_detection_desc)
+#                 print(object_detection_desc)
                 f_txt.write(object_detection_desc)    
                     
             
@@ -226,6 +226,8 @@ def detect_objects(bucket, weight,names,cfg,video,output_s3_prefix):
                 print ("tmp video file ="+file_name_fre+'_res.mp4')
                 writer = cv2.VideoWriter(file_name_fre+'_res.mp4', fourcc, 30,
                     (frame.shape[1], frame.shape[0]), True)
+#                 writer = cv2.VideoWriter(file_name_fre+'_res.mp4', 0x21, 30,
+#                     (frame.shape[1], frame.shape[0]), True)
 
                 # some information on processing single frame
                 if total > 0:
@@ -244,11 +246,11 @@ def detect_objects(bucket, weight,names,cfg,video,output_s3_prefix):
     writer.release()
     vs.release()
     
-    print ('file_name_fre='+file_name_fre)
-    print ('txt_file='+txt_file)
-    s3_client.upload_file(file_name_fre+'_res.mp4', bucket, output_s3_prefix+'/'+file_name_fre.split('/')[-1:][0].split('.')[0]+'_res.mp4')
-    print('s3 upload video file' +  file_name_fre+'_res.mp4' + "--" +bucket + "--" + output_s3_prefix+'/'+file_name_fre.split('/')[-1:][0].split('.')[0]+'_res.mp4')
     try:
+        print ('file_name_fre='+file_name_fre)
+        print ('txt_file='+txt_file)
+        s3_client.upload_file(file_name_fre+'_res.mp4', bucket, output_s3_prefix+'/'+file_name_fre.split('/')[-1:][0].split('.')[0]+'_res.mp4')
+        print('s3 upload video file' +  file_name_fre+'_res.mp4' + "--" +bucket + "--" + output_s3_prefix+'/'+file_name_fre.split('/')[-1:][0].split('.')[0]+'_res.mp4')
         s3_client.upload_file(txt_file, bucket, output_s3_prefix+'/'+txt_file.split('/')[-1:][0])
         print('s3 upload text file' + txt_file + "--" +bucket + "--" + output_s3_prefix+ '/'+txt_file.split('/')[-1:][0])
         delete_file(video)
@@ -256,7 +258,8 @@ def detect_objects(bucket, weight,names,cfg,video,output_s3_prefix):
         delete_file(txt_file)
         print('clean file'+video + ', '+file_name_fre+'_res.mp4' +","+txt_file)
     except Exception as e:
-        print(e)
+#         print(e)
+        print('done')
 
 
 
